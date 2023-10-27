@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>little canvas</title>
+</head>
+<body>
+    <canvas style="background: blue" width="3000" height="1500"></canvas>
+
+    <!-- Insert the image here -->
+    <img id="water" src="water.png" alt="waterrr" style="width: 400px; height: 500px; position: absolute; top: 400px;">
+
+    <script>
+      const myCanvas = document.querySelector("canvas");
+      const ctx = myCanvas.getContext("2d");
+
+      // Define the current drawing color
+      let currentColor = "red";
+      let isDrawing = false;
+
+      // Fill the white background
+      ctx.fillStyle = "white";
+      ctx.fillRect(550, 100, 800, 600);
+
+      // Other elements on the canvas
+      ctx.fillStyle = "black";
+      ctx.fillRect(548, 100, 802, 10);
+
+      ctx.fillStyle = "black";
+      ctx.font = "24px Arial";
+      ctx.fillText("My little canvas", 870, 140);
+
+      ctx.fillStyle = "black";
+      ctx.font = "24px Arial";
+      ctx.fillText("water helps you to paint better", 200, 390);
+
+      ctx.fillStyle = "black";
+      ctx.fillRect(548, 160, 802, 5);
+
+      ctx.fillRect(548, 165, 58, 58);
+      ctx.fillRect(548, 220, 58, 58);
+      ctx.fillRect(548, 273, 58, 58);
+
+      ctx.fillStyle = "red";
+      ctx.fillRect(553, 165, 50, 50);
+      ctx.fillStyle = "orange";
+      ctx.fillRect(553, 220, 50, 50);
+      ctx.fillStyle = "yellow";
+      ctx.fillRect(553, 275, 50, 50);
+
+      // Add click event listeners to the palette colors
+      myCanvas.addEventListener("click", (event) => {
+        const x = event.offsetX;
+        const y = event.offsetY;
+        if (x >= 553 && x <= 603 && y >= 165 && y <= 215) {
+          currentColor = "red";
+        } else if (x >= 553 && x <= 603 && y >= 220 && y <= 270) {
+          currentColor = "orange";
+        } else if (x >= 553 && x <= 603 && y >= 275 && y <= 325) {
+          currentColor = "yellow";
+        }
+      });
+
+      // Add mouse move event listener for drawing
+      myCanvas.addEventListener("mousedown", () => {
+        isDrawing = true;
+      });
+
+      myCanvas.addEventListener("mouseup", () => {
+        isDrawing = false;
+        ctx.beginPath(); // Start a new path for the next drawing
+      });
+
+      myCanvas.addEventListener("mousemove", (event) => {
+        if (isDrawing) {
+          const x = event.offsetX;
+          const y = event.offsetY;
+
+          ctx.fillStyle = currentColor;
+          ctx.beginPath();
+          ctx.arc(x, y, 30, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      });
+
+      const water = document.getElementById('water');
+      water.addEventListener('click', function(){
+        currentColor = 'lightgrey';
+    
+      })
+    </script>
+</body>
+</html>
